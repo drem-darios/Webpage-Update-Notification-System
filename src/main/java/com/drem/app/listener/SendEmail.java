@@ -1,4 +1,4 @@
-package listener;
+package com.drem.app.listener;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail implements Observer, Serializable
 {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
     private String[] to;
@@ -28,7 +28,7 @@ public class SendEmail implements Observer, Serializable
     private String host = "localhost";
     private String port = "8080";
     private boolean debug = false;
-    
+
     public SendEmail(String subject, String message, String from, String... to)
     {
         this.subject = subject;
@@ -36,7 +36,7 @@ public class SendEmail implements Observer, Serializable
         this.from = from;
         this.to = to;
     }
-    
+
     @Override
     public void update(Observable o, Object arg)
     {
@@ -44,17 +44,17 @@ public class SendEmail implements Observer, Serializable
         postMail();
         System.out.println("EMAIL: Email sent");
     }
-    
+
     public void setHost(String host)
     {
         this.host = host;
     }
-    
+
     public void setPort(String port)
     {
         this.port = port;
     }
-    
+
     /**
      * @return the to
      */
@@ -107,38 +107,38 @@ public class SendEmail implements Observer, Serializable
     {
         this.debug = debug;
     }
-    
+
     public void postMail()
     {
          Properties props = new Properties();
          props.put("mail.smtp.host", host);
          props.put("mail.smtp.port", port);
-         
+
         Session session = Session.getDefaultInstance(props, null);
         session.setDebug(debug);
-        
-        try 
+
+        try
         {
-            Message msg = new MimeMessage(session);   
+            Message msg = new MimeMessage(session);
             InternetAddress addressFrom = new InternetAddress(from);
             msg.setFrom(addressFrom);
-    
-            InternetAddress[] addressTo = new InternetAddress[to.length]; 
+
+            InternetAddress[] addressTo = new InternetAddress[to.length];
             for (int i = 0; i < to.length; i++)
             {
                 addressTo[i] = new InternetAddress(to[i]);
             }
             msg.setRecipients(Message.RecipientType.TO, addressTo);
-    
+
             msg.addHeader("Notification", "Page Modified");
-    
+
             msg.setSubject(subject);
             msg.setContent(message, "text/plain");
             Transport.send(msg);
         }
         catch(MessagingException ex)
         {
-            
+
         }
     }
 }

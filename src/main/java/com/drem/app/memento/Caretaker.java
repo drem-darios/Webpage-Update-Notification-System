@@ -1,17 +1,10 @@
-package memento;
+package com.drem.app.memento;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.net.URL;
+import com.drem.app.listener.PageModificationListener;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-
-import listener.PageModificationListener;
 
 /**
  * @author Drem Darios
@@ -28,7 +21,7 @@ public class Caretaker implements Serializable
      * The path to the web monitor mementos
      */
     public static final String PATH = "webmonitor";
-    
+
     public void init()
     {
         try
@@ -38,14 +31,14 @@ public class Caretaker implements Serializable
         catch (Exception e)
         {
             e.printStackTrace();
-        }    
+        }
     }
-    
+
     public Memento readMemento(String s)
     {
         return savedMementoMap.get(s);
     }
-    
+
     public void writeMemento(String s, Memento m)
     {
         savedMementoMap.put(s, m);
@@ -58,11 +51,11 @@ public class Caretaker implements Serializable
             e.printStackTrace();
         }
     }
-    
+
     private void writeToFile(String filename, Memento m) throws IOException
     {
         File dir = new File(TEMPDIR+PATH);
-        
+
         // if the directory does not exist, create it
         if (!dir.exists())
         {
@@ -79,9 +72,9 @@ public class Caretaker implements Serializable
 
 
     /**
-     * @throws IOException 
-     * @throws ClassNotFoundException 
-     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     *
      */
     private void restoreFromFile() throws IOException, ClassNotFoundException
     {
@@ -99,8 +92,8 @@ public class Caretaker implements Serializable
                 PageModificationListener p = new PageModificationListener();
                 p.setMemento(m);
                 savedMementoMap.put(filename, m);
-                in.close();    
-            }    
+                in.close();
+            }
         }
     }
 }

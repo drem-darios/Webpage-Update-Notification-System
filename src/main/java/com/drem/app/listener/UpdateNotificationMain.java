@@ -1,4 +1,4 @@
-package listener;
+package com.drem.app.listener;
 
 import java.net.MalformedURLException;
 import java.util.Date;
@@ -20,7 +20,7 @@ public class UpdateNotificationMain
         String from = "me@test.com";
         String subject = "/****************** NOTHING! ************/";
         String message = "IT WORKED! "+new Date().toString();
-        
+
         PageModificationListener listener = null;
         try
         {
@@ -33,10 +33,10 @@ public class UpdateNotificationMain
         }
         SendEmail email = new SendEmail(subject, message, from, to);
         PrintNotification notification = new PrintNotification();
-        
+
         listener.addObserver(email);
         listener.addObserver(notification);
-        
+
         //listener.startListening();
     }
 }

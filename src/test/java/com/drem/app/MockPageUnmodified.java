@@ -1,15 +1,14 @@
-package test;
+package com.drem.app;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.drem.app.listener.PageModificationListener;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 
-import org.mockito.Mockito;
-
-import listener.PageModificationListener;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Drem Darios
@@ -17,29 +16,29 @@ import listener.PageModificationListener;
  */
 public class MockPageUnmodified extends PageModificationListener
 {
-    URLConnection mockConnection;
+    private URLConnection mockConnection;
     /**
      * Array of return values for mocking the return values of calls to
      * <code>getLastModified</code>. The final element in the array signal a page
      * modification
      */
-    Long[] returnValues = new Long[]{Long.MIN_VALUE, 
+    Long[] returnValues = new Long[]{Long.MIN_VALUE,
             Long.MIN_VALUE, Long.MIN_VALUE, Long.MAX_VALUE};
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      * @param url
-     * @throws MalformedURLException 
+     * @throws MalformedURLException
      */
     public MockPageUnmodified(String url) throws MalformedURLException
     {
         super(url);
     }
-    
+
     @Override
     public void startListening() throws IOException
     {
@@ -48,14 +47,14 @@ public class MockPageUnmodified extends PageModificationListener
         Mockito.verify(mockConnection, Mockito.times(
                 returnValues.length + 1)).getLastModified();
     }
-    
+
     @Override
     public URLConnection createConnection() throws IOException
     {
         mockConnection = mock(URLConnection.class);
         when(mockConnection.getLastModified()).thenReturn(
                 Long.MIN_VALUE, returnValues);
-        
+
         return mockConnection;
     }
 }

@@ -1,4 +1,4 @@
-package memento;
+package com.drem.app.memento;
 
 import java.io.Serializable;
 

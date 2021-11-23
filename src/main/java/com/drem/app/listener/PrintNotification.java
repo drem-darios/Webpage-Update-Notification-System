@@ -1,4 +1,4 @@
-package listener;
+package com.drem.app.listener;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -11,12 +11,12 @@ import java.util.Observer;
 public class PrintNotification implements Observer, Serializable
 {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      */
     private void printNotification(Object arg)
     {
